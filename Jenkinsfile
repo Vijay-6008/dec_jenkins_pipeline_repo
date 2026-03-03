@@ -10,7 +10,7 @@ pipeline{
         stage('STAGE2') {
             steps{
                 sh '''
-                    #!/bin/bash
+                 #!/bin/bash
                    ls -lrt
                     sleep 
                 '''
