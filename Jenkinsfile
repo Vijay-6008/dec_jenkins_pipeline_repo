@@ -3,13 +3,17 @@ pipeline{
     stages{
         stage('STAGE1') {
             steps{
-                
+                sh 'sleep 5'
                 echo "This is the stage 1"
             }
         }
         stage('STAGE2') {
             steps{
-               
+                sh '''
+                    #!/bin/bash
+                   ls -lrt
+                    sleep 
+                '''
                 echo "This is the stage 2"
             }
         }
