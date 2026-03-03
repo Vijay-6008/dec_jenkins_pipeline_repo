@@ -12,6 +12,7 @@ pipeline{
                
                 echo "Hello manasa"
                 echo "good evning"
+                echo "hello"
             }
         }
     }
