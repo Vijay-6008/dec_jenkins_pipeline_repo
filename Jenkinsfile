@@ -2,7 +2,7 @@ pipeline{
     agent any
     stages{
         stage('STAGE1') {
-            step{
+            steps{
                 sh 'sleep 5'
                 echo "This is the stage 1"
             }
@@ -15,8 +15,9 @@ pipeline{
                     sleep 5
                 '''
                 echo "This is the stage 2"
+                echo "manasa-vijay"
+                echo "hi all"
             }
         }
     }
 }
-        
