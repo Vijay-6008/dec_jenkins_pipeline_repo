@@ -9,14 +9,14 @@ pipeline{
         }
         stage('STAGE2') {
             steps{
-               
+                echo "This is the stage 2"
                 echo "Hello manasa"
                 
             }
         }
         stage('STAGE3') {
             steps{
-               
+                echo "This is the stage 3"
                 echo "Hello manasa-vijay"
                 
             }
