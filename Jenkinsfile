@@ -10,13 +10,12 @@ pipeline{
         stage('STAGE2') {
             steps{
                 sh '''
-                 #!/bin/bash
-                   ls -lrt
-                    sleep 
+                    #!/bin/bash
+                    ls -lrt
+                    sleep 5
                 '''
                 echo "This is the stage 2"
             }
         }
     }
 }
-        
