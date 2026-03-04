@@ -1,17 +1,5 @@
-pipeline {
-    agent any   
 
-    stages {
-        stage('Check System Info') {
-            steps {
-                sh 'echo Running on:'
-                sh 'hostname'
-                sh 'whoami'
-                sh 'pwd'
-            }
-        }
-    }
-}
+
 
 pipeline {
     agent { label 'slave_two' }   
