@@ -38,14 +38,14 @@ pipeline {
         stage('Stage 1') {
             agent { label 'slave_one' }
             steps {
-                sh 'echo Hello from Linux Agent'
+                sh 'echo Hello from slave one'
             }
         }
 
         stage('Stage 2') {
             agent { label 'slave_two' }
             steps {
-                sh 'echo Hello from Docker Agent'
+                sh 'echo Hello from slave two'
             }
         }
     }
