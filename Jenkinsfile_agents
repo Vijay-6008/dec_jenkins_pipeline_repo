@@ -12,3 +12,16 @@ pipeline {
         }
     }
 }
+
+pipeline {
+    agent { label 'slave_two' }   
+    stages {
+        stage('Check Agent') {
+            steps {
+                echo "Running on labeled agent"
+                sh 'hostname'
+                sh 'whoami'
+            }
+        }
+    }
+}
