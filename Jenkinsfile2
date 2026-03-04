@@ -13,14 +13,14 @@ pipeline {
                 '''
             }
         }
-
+c
         stage('Python Program') {
             steps {
                 sh '''
                     echo "Creating Python file..."
                     
                     cat <<EOF > hello.py
-print("Hello from Jenkins Pipeline!")
+print("Adding two numbers")
 a = 10
 b = 20
 print("Sum is:", a + b)
