@@ -3,38 +3,26 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Run Python Script') {
             steps {
-                echo "Checking out source code..."
-                checkout scm
+                sh 'python3 --version'
+                sh 'python3 script.py'
             }
         }
 
-        stage('Setup Python') {
+        stage('Archive Output') {
             steps {
-                sh '''
-                    echo "Checking Python version..."
-                    python3 --version
-                '''
-            }
-        
-
-        stage('Run Python Script') {
-            steps {
-                sh '''
-                    echo "Running Python script..."
-                    python3 Jenkinsexample.py
-                '''
+                archiveArtifacts artifacts: 'build_output.txt', fingerprint: true
             }
         }
     }
 
     post {
         success {
-            echo 'Build Successful!'
+            echo 'Build completed successfully!'
         }
         failure {
-            echo 'Build Failed!'
+            echo 'Build failed!'
         }
     }
 }
