@@ -1,6 +1,20 @@
+/*pipeline {
+    agent any   
 
+    stages {
+        stage('Check System Info') {
+            steps {
+                sh 'echo Running on:'
+                sh 'hostname'
+                sh 'whoami'
+                sh 'pwd'
+            }
+        }
+    }
+}
+*/
 
-
+/*
 pipeline {
     agent { label 'slave_two' }   
     stages {
@@ -9,6 +23,29 @@ pipeline {
                 echo "Running on labeled agent"
                 sh 'hostname'
                 sh 'whoami'
+            }
+        }
+    }
+}
+*/
+
+
+pipeline {
+    agent none
+
+    stages {
+
+        stage('Stage 1') {
+            agent { label 'slave_one' }
+            steps {
+                sh 'echo Hello from Linux Agent'
+            }
+        }
+
+        stage('Stage 2') {
+            agent { label 'slave_two' }
+            steps {
+                sh 'echo Hello from Docker Agent'
             }
         }
     }
