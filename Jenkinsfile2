@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Linux Commands') {
+            steps {
+                sh '''
+                    echo "Running Linux commands..."
+                    pwd
+                    ls -l
+                    date
+                '''
+            }
+        }
+
+        stage('Python Program') {
+            steps {
+                sh '''
+                    echo "Creating Python file..."
+                    
+                    cat <<EOF > hello.py
+print("Hello from Jenkins Pipeline!")
+a = 10
+b = 20
+print("Sum is:", a + b)
+EOF
+
+                    echo "Executing Python program..."
+                    python3 hello.py
+                '''
+            }
+        }
+    }
+}
