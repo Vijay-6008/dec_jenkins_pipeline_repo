@@ -1,0 +1,14 @@
+pipeline {
+    agent any   // Run on any available agent
+
+    stages {
+        stage('Check System Info') {
+            steps {
+                sh 'echo Running on:'
+                sh 'hostname'
+                sh 'whoami'
+                sh 'pwd'
+            }
+        }
+    }
+}
