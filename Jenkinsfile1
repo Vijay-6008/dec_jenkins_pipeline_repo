@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo "Checking out source code..."
+                checkout scm
+            }
+        }
+
+        stage('Setup Python') {
+            steps {
+                sh '''
+                    echo "Checking Python version..."
+                    python3 --version
+                '''
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    if [ -f requirements.txt ]; then
+                        pip3 install -r requirements.txt
+                    fi
+                '''
+            }
+        }
+
+        stage('Run Python Script') {
+            steps {
+                sh '''
+                    echo "Running Python script..."
+                    python3 Jenkinsexample.py
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build Successful!'
+        }
+        failure {
+            echo 'Build Failed!'
+        }
+    }
+}
