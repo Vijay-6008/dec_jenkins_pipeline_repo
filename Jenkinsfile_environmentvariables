@@ -1,0 +1,26 @@
+pipeline {
+    agent none
+
+    environment {
+        DOCKER_USER = "manasa"
+        AWS_ACCESS_KEY = "26724737639"
+    }
+
+    stages {
+
+        stage('Stage 1') {
+            
+            steps {
+                echo "DOCKER_USER: ${DOCKER_USER}"
+                echo "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
+               
+
+                sh '''
+                    env
+
+                '''
+            }
+        }
+
+    }
+}
