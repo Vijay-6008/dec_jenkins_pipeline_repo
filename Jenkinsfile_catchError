@@ -5,10 +5,12 @@ pipeline {
         stage('Stage 1') {
             
             steps {
+                catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
                 echo 'stage1 is running'
                 sh '''sleep 5
                     exit 1
                 '''
+                }
             }
         }
 
