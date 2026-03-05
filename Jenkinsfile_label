@@ -1,0 +1,15 @@
+pipeline {
+    // agent { label 'slave_two && slave_one' }
+    // agent { label 'slave_two || slave_one' }
+    // agent { label '!master' }
+    agent { label 'slave_two' }
+    stages {
+        stage('Check Agent') {
+            steps {
+                echo "Running on labeled agent"
+                sh 'hostname'
+                sh 'whoami'
+            }
+        }
+    }
+}
