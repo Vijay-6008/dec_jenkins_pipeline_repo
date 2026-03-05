@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    stages {
+
+        stage('Stage 1') {
+            
+            steps {
+                echo 'stage1 is running'
+                sh 'sleep 5'
+            }
+        }
+
+        stage('PARALLEL TESTING') {
+            parallel{
+                stage('WINDOWS TESTING') {
+                steps {
+                     echo 'windows is running'
+                     sh 'sleep 5'
+                }
+             }
+
+                 stage('MACOS TESTING') {
+                  steps {
+                       echo 'macos is running'
+                         sh 'sleep 5'
+                  }
+              }
+          }
+        }
+
+    stage('FINAL') {
+                  steps {
+                       echo 'Final is running'
+                         sh 'sleep 5'
+                  }
+              }
+    }
+}
