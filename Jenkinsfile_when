@@ -1,44 +1,6 @@
 pipeline {
     agent any
 
-//     stages {
-
-//         stage('Build') {
-//             steps {
-//                 echo "Building the project..."
-//             }
-//         }
-
-//         stage('Deploy to Dev') {
-//             when {
-//                 expression { return true } // This stage will run only if the expression is true
-//             }
-//             steps {
-//                 echo "Deploying to Development Environment"
-//             }
-//         }
-
-//         stage('Deploy to Prod') {
-//             when {
-//                 expression { return false } // This stage will NOT run
-//             }
-//             steps {
-//                 echo "Deploying to Production Environment"
-//             }
-//         }
-
-//     }
-// }
-
-
-
-
-
-
-    parameters {
-        string(name: 'ENV', defaultValue: 'dev', description: 'Environment to deploy')
-    }
-
     stages {
 
         stage('Build') {
@@ -49,7 +11,7 @@ pipeline {
 
         stage('Deploy to Dev') {
             when {
-                expression { params.ENV == 'pdp' } // Runs only if ENV = 'dev'
+                expression { return true } // This stage will run only if the expression is true
             }
             steps {
                 echo "Deploying to Development Environment"
@@ -58,7 +20,7 @@ pipeline {
 
         stage('Deploy to Prod') {
             when {
-                expression { params.ENV == 'prod' } // Runs only if ENV = 'prod'
+                expression { return false } // This stage will NOT run
             }
             steps {
                 echo "Deploying to Production Environment"
@@ -67,3 +29,7 @@ pipeline {
 
     }
 }
+
+
+
+
