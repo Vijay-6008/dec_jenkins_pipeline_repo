@@ -11,7 +11,7 @@ pipeline {
 
         stage('Deploy to Dev') {
             when {
-                expression { return false } 
+                expression { return true } 
             }
             steps {
                 echo "Deploying to Development Environment"
