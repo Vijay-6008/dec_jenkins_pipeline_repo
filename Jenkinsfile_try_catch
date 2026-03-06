@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        echo "Starting build..."
+                        sh "mvn clean install"
+                    }
+                    catch (Exception e) {
+                        echo "Build failed: ${e}"
+                        currentBuild.result = 'FAILURE'
+                    }
+                    finally {
+                        echo "Build stage completed"
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    try {
+                        echo "Running tests..."
+                        sh "mvn test"
+                    }
+                    catch (Exception e) {
+                        echo "Tests failed: ${e}"
+                    }
+                }
+            }
+        }
+    }
+}
