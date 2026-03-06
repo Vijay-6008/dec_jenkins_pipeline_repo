@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        REPO_URL = 'https://github.com/your-org/your-repo.git' // Replace with your GitHub repo
+        REPO_URL = 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git' // Replace with your GitHub repo
     }
 
     stages {
