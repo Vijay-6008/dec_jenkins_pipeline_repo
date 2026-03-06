@@ -1,30 +1,78 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM('H/5 * * * *')
+        cron('H 0 * * *')
+    }
+
+    parameters {
+        choice(name: 'ENV', choices: ['dev','staging','prod'], description: 'Select environment to deploy')
+    }
+
+    environment {
+        REPO_URL = 'https://github.com/your-org/your-repo.git' // Replace with your GitHub repo
+    }
+
     stages {
 
-       
-        stage('Build Upstream Project') {
+        
+        stage('Checkout') {
             steps {
-                echo "Upstream Job: Building project..."        
-                sh 'echo Compiling code'
+                echo "Cloning GitHub repository..."
+                git branch: 'main', url: "${env.REPO_URL}"
+            }
+        }
+
+        
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        echo "Building project..."
+                        sh 'echo Compiling source code'
+                        sh 'mkdir -p build_output'
+                    } catch (Exception e) {
+                        echo "Build failed: ${e}"
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    }
+                }
             }
         }
 
        
-        stage('Trigger Downstream') {
+        stage('Deploy') {
+            when {
+                expression { return params.ENV != 'dev' } 
+            }
             steps {
-                echo "Triggering Downstream Job"        
-                build job: 'Job_B', wait: true, propagate: true
+                script {
+                    try {
+                        echo "Deploying to ${params.ENV} environment..."
+                        sh 'echo Deploying application...'
+                    } catch (Exception e) {
+                        echo "Deployment failed: ${e}"
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    } finally {
+                        echo "Deployment stage completed"
+                    }
+                }
             }
         }
 
-       
-        stage('Downstream Stage') {
-            steps {
-                echo "Downstream Stage: Deploying application..."
-                sh 'echo Deploying code to environment'
-            }
+        
+        
+
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Check logs for details."
         }
     }
 }
