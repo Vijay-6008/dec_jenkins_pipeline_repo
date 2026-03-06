@@ -49,7 +49,7 @@ pipeline {
 
         stage('Deploy to Dev') {
             when {
-                expression { params.ENV == 'dev' } // Runs only if ENV = 'dev'
+                expression { params.ENV == 'pdp' } // Runs only if ENV = 'dev'
             }
             steps {
                 echo "Deploying to Development Environment"
