@@ -9,14 +9,14 @@ pipeline {
             }
         }
 
-        stage('Deploy to Dev') {
-            when {
-                expression { return true } // This stage will run only if the expression is true
-            }
-            steps {
-                echo "Deploying to Development Environment"
-            }
-        }
+        // stage('Deploy to Dev') {
+        //     when {
+        //         expression { return true } // This stage will run only if the expression is true
+        //     }
+        //     steps {
+        //         echo "Deploying to Development Environment"
+        //     }
+        // }
 
         stage('Deploy to Prod') {
             when {
