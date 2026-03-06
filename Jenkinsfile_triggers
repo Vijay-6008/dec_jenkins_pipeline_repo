@@ -1,72 +1,37 @@
 pipeline {
     agent any
 
-   
     triggers {
-        pollSCM('H/1 * * * *')
-        cron('H 0 * * *')
-    }
-
-    environment {
-        REPO_URL = 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
-        DEPLOY_ENV = 'staging'
+        cron('H/2 * * * *')        
+        githubPush()                
+        pollSCM('H/5 * * * *')      
     }
 
     stages {
 
-        
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                echo "Cloning GitHub repository..."
-                git branch: 'main', url: "${env.REPO_URL}"
+                echo "Cloning code from GitHub..."
+                git 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
             }
         }
 
-       
         stage('Build') {
             steps {
-                script {
-                    try {
-                        echo "Building project..."
-                        sh 'echo Compiling source code'
-                        
-                    } catch (Exception e) {
-                        echo "Build failed: ${e}"
-                        currentBuild.result = 'FAILURE'
-                        throw e
-                    }
-                }
+                echo "Building the project..."
             }
         }
 
-       
+        stage('Test') {
+            steps {
+                echo "Running tests..."
+            }
+        }
+
         stage('Deploy') {
             steps {
-                script {
-                    try {
-                        echo "Deploying to ${env.DEPLOY_ENV} environment..."
-                        sh 'echo Deploying application...'
-                    } catch (Exception e) {
-                        echo "Deployment failed: ${e}"
-                        currentBuild.result = 'FAILURE'
-                        throw e
-                    } finally {
-                        echo "Deployment stage completed"
-                    }
-                }
+                echo "Deploying application..."
             }
-        }
-
-        
-
-    }
-
-    post {
-        success {
-            echo "Pipeline completed successfully!"
-        }
-        failure {
-            echo "Pipeline failed. Check logs for details."
         }
     }
 }
