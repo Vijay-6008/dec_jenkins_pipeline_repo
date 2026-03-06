@@ -44,7 +44,7 @@ pipeline {
        
         stage('Deploy') {
             when {
-                expression { return params.ENV != 'dev' } 
+                expression { return params.ENV != 'vmk' } 
             }
             steps {
                 script {
