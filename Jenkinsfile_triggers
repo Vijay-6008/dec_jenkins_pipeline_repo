@@ -1,17 +1,15 @@
 pipeline {
     agent any
 
+   
     triggers {
         pollSCM('H/1 * * * *')
         cron('H 0 * * *')
     }
 
-    parameters {
-        choice(name: 'ENV', choices: ['dev','staging','prod'], description: 'Select environment to deploy')
-    }
-
     environment {
-        REPO_URL = 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git' // Replace with your GitHub repo
+        REPO_URL = 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
+        DEPLOY_ENV = 'staging'
     }
 
     stages {
@@ -24,7 +22,7 @@ pipeline {
             }
         }
 
-        
+       
         stage('Build') {
             steps {
                 script {
@@ -43,13 +41,10 @@ pipeline {
 
        
         stage('Deploy') {
-            when {
-                expression { return params.ENV != 'vmk' } 
-            }
             steps {
                 script {
                     try {
-                        echo "Deploying to ${params.ENV} environment..."
+                        echo "Deploying to ${env.DEPLOY_ENV} environment..."
                         sh 'echo Deploying application...'
                     } catch (Exception e) {
                         echo "Deployment failed: ${e}"
@@ -62,7 +57,6 @@ pipeline {
             }
         }
 
-        
         
 
     }
