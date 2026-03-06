@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+
+       
+        stage('Build Upstream Project') {
+            steps {
+                echo "Upstream Job: Building project..."        
+                sh 'echo Compiling code'
+            }
+        }
+
+       
+        stage('Trigger Downstream') {
+            steps {
+                echo "Triggering Downstream Job"        
+                build job: 'Job_B', wait: true, propagate: true
+            }
+        }
+
+       
+        stage('Downstream Stage') {
+            steps {
+                echo "Downstream Stage: Deploying application..."
+                sh 'echo Deploying code to environment'
+            }
+        }
+    }
+}
