@@ -10,7 +10,7 @@ pipeline {
                         echo "Starting build stage"
                         sh 'echo Building the project'
                         //sh 'ls wrong_folder'
-                        sh 'mkdir test_folder'
+                        sh 'mkdir test_folder1'
                     } catch (Exception e) {
                         echo "Build stage failed: ${e}"
                         currentBuild.result = 'FAILURE'
