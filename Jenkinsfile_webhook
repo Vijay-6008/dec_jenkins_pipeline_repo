@@ -1,43 +1,103 @@
 pipeline {
     agent any
 
-    environment{
-        CURRENT_ENV = 'prodaa'
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                [key: 'username', value: '$.user'],
+                [key: 'action', value: '$.action']
+            ],
+            causeString: 'Triggered by webhook from $username',
+            token: 'webhook123',
+            printContributedVariables: true,
+            printPostContent: true
+        )
     }
 
     stages {
-
-        stage('Checkout REPLAY') {
+        stage('Webhook Received') {
             steps {
-                // checkout{[$class:'GIT_SCM',
-                // branches:[[name: '*/main']],
-                // extension:[],
-                // userRemoteConfigs: [[
-                //     credentialsId: 'Vijay-6008',
-                    git : 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
-                // ]]
-                // ]
-                }
-
-        sh '''
-        echo GIT_BRANCH: $GIT_BRANCH
-        echo BRANCH_NAME: $BRANCH_NAME
-        '''
+                echo "Webhook triggered!"
+                echo "User: ${username}"
+                echo "Action: ${action}"
             }
         }
-        stage('stage1 when branch main'){
-            when{
-                expression{
-                    return env.GIT_BRANCH == 'origin/main'
-                }
-            }
-            steps{
-                echo 'this is stage1 running'
+
+        stage('Process Data') {
+            steps {
                 sh '''
-                    pwd
-                    ls -lrt
-                    sleep 5
-                    '''
+                echo "Processing webhook data..."
+                echo "User = ${username}"
+                echo "Action = ${action}"
+                '''
             }
-        }  
-    
+        }
+
+        stage('Finish') {
+            steps {
+                echo "Pipeline finished successfully"
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// pipeline {
+//     agent any
+
+//     environment{
+//         CURRENT_ENV = 'prodaa'
+//     }
+
+//     stages {
+
+//         stage('Checkout REPLAY') {
+//             steps {
+//                 checkout{[$class:'GIT_SCM',
+//                 branches:[[name: '*/main']],
+//                 extension:[],
+//                 userRemoteConfigs: [[
+//                     credentialsId: '',
+//                     url: ''
+//                 ]]
+//                 ]}
+
+//         sh '''
+//         echo GIT_BRANCH: $GIT_BRANCH
+//         echo BRANCH_NAME: $BRANCH_NAME
+//         '''
+//             }
+//         }
+//         stage('stage1 when branch main'){
+//             when{
+//                 expression{
+//                     return env.GIT_BRANCH == 'origin/main'
+//                 }
+//             }
+//             steps{
+//                 echo 'this is stage1 running'
+//                 sh '''
+//                     pwd
+//                     ls -lrt
+//                     sleep 5
+//                     '''
+//             }
+//         }  
+//     }
