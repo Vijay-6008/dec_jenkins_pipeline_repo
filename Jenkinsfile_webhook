@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('H/2 * * * *')           
+    }
+
     parameters {
         string(name: 'username', defaultValue: 'guest', description: 'User name')
         string(name: 'action', defaultValue: 'test', description: 'Action type')
