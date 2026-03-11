@@ -9,14 +9,15 @@ pipeline {
 
         stage('Checkout REPLAY') {
             steps {
-                checkout{[$class:'GIT_SCM',
-                branches:[[name: '*/main']],
-                extension:[],
-                userRemoteConfigs: [[
-                    credentialsId: 'Vijay-6008',
-                    url: 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
-                ]]
-                ]}
+                // checkout{[$class:'GIT_SCM',
+                // branches:[[name: '*/main']],
+                // extension:[],
+                // userRemoteConfigs: [[
+                //     credentialsId: 'Vijay-6008',
+                    git : 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
+                // ]]
+                // ]
+                }
 
         sh '''
         echo GIT_BRANCH: $GIT_BRANCH
