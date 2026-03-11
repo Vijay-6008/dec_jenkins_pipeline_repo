@@ -13,8 +13,8 @@ pipeline {
                 branches:[[name: '*/main']],
                 extension:[],
                 userRemoteConfigs: [[
-                    credentialsId: '',
-                    url: ''
+                    credentialsId: 'Vijay-6008',
+                    url: 'https://github.com/Vijay-6008/dec_jenkins_pipeline_repo.git'
                 ]]
                 ]}
 
