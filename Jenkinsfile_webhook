@@ -1,103 +1,34 @@
 pipeline {
     agent any
 
-    triggers {
-        GenericTrigger(
-            genericVariables: [
-                [key: 'username', value: '$.user'],
-                [key: 'action', value: '$.action']
-            ],
-            causeString: 'Triggered by webhook from $username',
-            token: 'webhook123',
-            printContributedVariables: true,
-            printPostContent: true
-        )
+    parameters {
+        string(name: 'username', defaultValue: 'guest', description: 'User name')
+        string(name: 'action', defaultValue: 'test', description: 'Action type')
     }
 
     stages {
         stage('Webhook Received') {
             steps {
                 echo "Webhook triggered!"
-                echo "User: ${username}"
-                echo "Action: ${action}"
+                echo "User: ${params.username}"
+                echo "Action: ${params.action}"
             }
         }
 
         stage('Process Data') {
             steps {
-                sh '''
+                sh """
                 echo "Processing webhook data..."
-                echo "User = ${username}"
-                echo "Action = ${action}"
-                '''
+                echo "User = ${params.username}"
+                echo "Action = ${params.action}"
+                """
             }
         }
 
         stage('Finish') {
             steps {
-                echo "Pipeline finished successfully"
+                echo "Pipeline completed successfully"
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// pipeline {
-//     agent any
-
-//     environment{
-//         CURRENT_ENV = 'prodaa'
-//     }
-
-//     stages {
-
-//         stage('Checkout REPLAY') {
-//             steps {
-//                 checkout{[$class:'GIT_SCM',
-//                 branches:[[name: '*/main']],
-//                 extension:[],
-//                 userRemoteConfigs: [[
-//                     credentialsId: '',
-//                     url: ''
-//                 ]]
-//                 ]}
-
-//         sh '''
-//         echo GIT_BRANCH: $GIT_BRANCH
-//         echo BRANCH_NAME: $BRANCH_NAME
-//         '''
-//             }
-//         }
-//         stage('stage1 when branch main'){
-//             when{
-//                 expression{
-//                     return env.GIT_BRANCH == 'origin/main'
-//                 }
-//             }
-//             steps{
-//                 echo 'this is stage1 running'
-//                 sh '''
-//                     pwd
-//                     ls -lrt
-//                     sleep 5
-//                     '''
-//             }
-//         }  
-//     }
